@@ -1,0 +1,13 @@
+# Конфигурация подключения к OData 1C
+ODATA_BASE_URL=http://localhost/Base/odata/standard.odata/
+ODATA_USERNAME=your_username
+ODATA_PASSWORD=your_password
+ODATA_TIMEOUT=30
+ODATA_VERIFY_SSL=true
+
+# Кэширование метаданных
+METADATA_CACHE_DIR=cache
+METADATA_CACHE_TTL_HOURS=24
+
+# Логирование (опционально)
+MCP_1C_LOG_FILE=logs/mcp_1c.log
