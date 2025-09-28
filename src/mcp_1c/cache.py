@@ -50,12 +50,17 @@ class DataCache:
         if file_path.exists():
             return file_path
         
+        # Убираем расширение .json из поискового запроса если оно есть
+        search_name = file_name
+        if search_name.endswith('.json'):
+            search_name = search_name[:-5]  # Убираем '.json'
+        
         # Ищем файлы, которые начинаются с указанного имени
-        matching_files = list(self.data_dir.glob(f"{file_name}*"))
+        matching_files = list(self.data_dir.glob(f"{search_name}*"))
         
         if not matching_files:
-            # Ищем файлы, которые содержат указанное имя
-            matching_files = [f for f in self.data_dir.glob("*.json") if file_name in f.name]
+            # Ищем файлы, которые содержат указанное имя (без .json)
+            matching_files = [f for f in self.data_dir.glob("*.json") if search_name in f.name]
         
         if not matching_files:
             raise FileNotFoundError(f"Файл данных не найден: {file_name}")

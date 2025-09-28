@@ -473,6 +473,78 @@ def create_1c_tools(config: ODataConfig) -> FastMCP:
             }
     
     @mcp.tool
+    async def create_1c_entity(
+        entity_set: str,
+        data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Создать новую сущность в 1С."""
+        try:
+            logger.info(f"Создание сущности в {entity_set}")
+            
+            # Добавляем системные поля если их нет
+            entity_data = data.copy()
+            
+            # Для справочников добавляем обязательные поля
+            if "Catalog_" in entity_set:
+                if "Code" not in entity_data:
+                    entity_data["Code"] = ""
+                if "Description" not in entity_data:
+                    entity_data["Description"] = entity_data.get("Code", "Новый элемент")
+            
+            # Для документов добавляем дату если её нет
+            if "Document_" in entity_set:
+                if "Date" not in entity_data:
+                    entity_data["Date"] = datetime.now().isoformat()
+                if "Posted" not in entity_data:
+                    entity_data["Posted"] = False
+            
+            result = await client.create_entity(entity_set, entity_data)
+            
+            logger.info("Сущность успешно создана")
+            return {
+                "status": "success",
+                "message": f"Сущность успешно создана в {entity_set}",
+                "entity_set": entity_set,
+                "created_entity": result
+            }
+            
+        except Exception as e:
+            logger.error(f"Ошибка при создании сущности: {e}")
+            return {
+                "status": "error",
+                "message": f"Ошибка при создании сущности: {str(e)}"
+            }
+    
+    @mcp.tool
+    async def update_1c_entity(
+        entity_set: str,
+        entity_key: str,
+        data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Обновить существующую сущность в 1С."""
+        try:
+            logger.info(f"Обновление сущности {entity_key} в {entity_set}")
+            
+            result = await client.update_entity(entity_set, entity_key, data)
+            
+            logger.info("Сущность успешно обновлена")
+            return {
+                "status": "success",
+                "message": f"Сущность {entity_key} успешно обновлена в {entity_set}",
+                "entity_set": entity_set,
+                "entity_key": entity_key,
+                "updated_data": data,
+                "result": result
+            }
+            
+        except Exception as e:
+            logger.error(f"Ошибка при обновлении сущности: {e}")
+            return {
+                "status": "error",
+                "message": f"Ошибка при обновлении сущности: {str(e)}"
+            }
+    
+    @mcp.tool
     async def clear_data_cache() -> Dict[str, bool]:
         """Очистить все сохраненные данные запросов."""
         try:

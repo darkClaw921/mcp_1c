@@ -78,8 +78,10 @@ def create_server() -> FastMCP:
                 "fetch_1c_metadata": "Получить и сохранить структуру метаобъектов 1С в JSON файл",
                 "fetch_1c_data": "Получить данные из 1С и сохранить в JSON файл",
                 "get_1c_entity": "Получить конкретную сущность по ключу",
-                "create_1c_document": "Создать новый документ в 1С",
-                "update_1c_document": "Обновить существующий документ",
+                "create_1c_entity": "Создать новую сущность (справочник, документ и др.)",
+                "update_1c_entity": "Обновить существующую сущность в 1С",
+                "create_1c_document": "Создать новый документ в 1С (устаревшая функция)",
+                "update_1c_document": "Обновить существующий документ (устаревшая функция)",
                 "delete_1c_document": "Удалить документ из 1С",
                 "create_rtu_document": "Создать документ РТиУ на основании другого документа",
                 "list_cached_data": "Получить список всех сохраненных JSON файлов с данными",
@@ -107,6 +109,22 @@ def create_server() -> FastMCP:
                 },
                 "get_structure": {
                     "file_name": "Catalog_Products_abc123.json"
+                },
+                "create_entity": {
+                    "entity_set": "Catalog_Products",
+                    "data": {
+                        "Code": "PROD001",
+                        "Description": "Новый товар",
+                        "Price": 1000.00
+                    }
+                },
+                "update_entity": {
+                    "entity_set": "Catalog_Products",
+                    "entity_key": "guid'...'",
+                    "data": {
+                        "Description": "Обновленное наименование",
+                        "Price": 1200.00
+                    }
                 },
                 "create_document": {
                     "document_type": "Document_SalesOrder",
