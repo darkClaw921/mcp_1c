@@ -50,6 +50,16 @@ ODATA_PASSWORD=your_password
 uv run main.py
 ```
 
+### 4. Подключение к серверу
+
+```json
+"connect_1c_mcp": {
+      "url": "http://localhost:8000/sse", // url сервера
+      "transport": "sse"
+},
+```
+
+
 ## Доступные инструменты
 
 ### Получение данных из 1С
