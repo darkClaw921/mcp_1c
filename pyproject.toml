@@ -1,7 +1,7 @@
 [project]
 name = "mcp-1c"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.1.0.1"
+description = "MCP сервер для работы с 1С через протокол OData"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
